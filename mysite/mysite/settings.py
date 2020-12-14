@@ -25,7 +25,7 @@ SECRET_KEY = '@$ct!_xoa(m)4k)#^*_ohj0w#zrx4!^!v2!82+gep1f57=_&*q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-RUTA_PROYECTO = Path(__file__).ancestor(3)
+RUTA_PROYECTO = Path(__file__).ancestor(2)
 ALLOWED_HOSTS = ['127.0.0.1']
 
 
@@ -118,10 +118,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'static','static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticroot')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static','static2'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 MEDIA_ROOT = RUTA_PROYECTO.child('media')

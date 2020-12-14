@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Inicio</title>
+	<link rel="stylesheet" href="{% static 'css/styleLogin.css' %}"/>
 </head>
 <body>
-<h1>Hola mundo</h1>
+
+	<h1>LOGIN</h1>
+	<div id=login>
+  	    <form id="frm">
+		<label for="iden">Código:</label>
+		<input type="text" id="iden" name="cui" value=""><br>
+		<label for="user">Nombre:</label>
+		<input type="text" id="user" name="user" value=""><br>
+		<label for="pass">Contraseña: </label>
+		<input type="password" id="pass" name="pass" value=""><br><br>
+		<input type="button" id="btn" name="Ingresar" value="Ingresar"><br>
+	    </form>
+	</div>
 </body>
 </html>

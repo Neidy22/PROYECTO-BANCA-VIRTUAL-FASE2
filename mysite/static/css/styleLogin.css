@@ -1,0 +1,47 @@
+body{
+background:url('../img/fondoLogin.gif');
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+h1{
+margin-left:45%;
+color: white;
+font-size:xx-large;
+font:900;
+font-style:oblique;
+
+}
+
+
+#login{
+background-color:#43c2c1;
+border-style:inset;
+margin-top:20px;
+width:25%;
+margin-left:37.5%;
+height:300px;
+}
+
+#frm label{
+margin-left:25%;
+color:#ffffff;
+font-size:larger;
+font:600;
+font-style:italic;
+
+}
+
+#frm input{
+background-color:#e6f5f3;
+margin-left:25%;
+width:50%;
+}
+
+#btn{
+background-color:aqua;
+border-color:aliceblue;
+text-align:center;
+text-emphasis-color:aquamarine;
+width:10%;
+}
