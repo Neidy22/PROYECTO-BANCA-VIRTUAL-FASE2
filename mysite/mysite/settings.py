@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inicio',
+    'administracion'
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
    #     'NAME': BASE_DIR / 'db.sqlite3',
     #}
 #}
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django', # dbname
+        'USER': 'neidy', # master username
+        'PASSWORD': 'Auntyflores12031206', # master password
+        'HOST': 'localhost', # Endpoint
+        'PORT': '3306',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -124,10 +134,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-MEDIA_ROOT = RUTA_PROYECTO.child('media')
+#MEDIA_ROOT = RUTA_PROYECTO.child('media')
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
+#STATICFILES_FINDERS = (
+ #   'django.contrib.staticfiles.finders.FileSystemFinder',
+  #  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+   # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+#)
