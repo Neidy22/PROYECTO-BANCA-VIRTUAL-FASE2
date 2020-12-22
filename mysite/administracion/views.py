@@ -120,6 +120,46 @@ def asignarUsuario(id,codigoe, codigoi,username,password):
     db.commit()
     c.close()
 
+def crearCuentaMonetaria(request):
+    form=cuentaMonetaria2()
+    nombre="Creación de nuevas cuentas monetarias"
+    variables = {
+        "form": form,
+        "mensaje": nombre
+    }
+    if request.method == "POST":
+        form = cuentaMonetaria2(data=request.POST)
+        if form.is_valid():
+            datos = form.cleaned_data
+            codigo=datos.get("codigo_usuario")
+            fondo=datos.get("fondo")
+            manejo=datos.get("monto_manejo")
+            moneda=datos.get("moneda")
+            estado=datos.get("estado")
+            auto=datos.get("pre_auto")
+            id=0
 
+
+            db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+            c = db.cursor()
+            consulta = "INSERT INTO cuentaMonetaria VALUES("+str(id)+"," + str(codigo) + "," + str(fondo) + "," + str(manejo) + ",'" + str(moneda) + "'," + str(estado) + "," + str(auto) +  ")"
+            c.execute(consulta)
+            db.commit()
+            c.close()
+            nombre = "Nueva cuenta creada"
+            form = cuentaMonetaria2()
+            variables = {
+                "form": form,
+                "mensaje": nombre
+            }
+
+        else:
+            nombre = "Ya existe una  con los mismos datos"
+            variables = {
+                "form": form,
+                "mensaje": nombre
+
+            }
+    return render(request, 'registroCuentaMonetaria.html', variables)
 
 

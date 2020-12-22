@@ -41,6 +41,25 @@ class clienteE2(forms.Form):
     class Meta:
         fields=("codigo","tipo", "nombre_comercial", "nombre_empresa", "nombre_representante", "direccion","telefono")
 
+class cuentaMonetaria(forms.ModelForm):
+    class Meta:
+        model=Cuentamonetaria
+        fields=("id","codigo_usuario","fondo","monto_manejo","moneda","estado","pre_auto")
+
+class cuentaMonetaria2(forms.Form):
+    opciones=(("1","Activada"),("0","Desactivada"))
+    codigo_usuario=forms.IntegerField(required=True,label="Código de usuario")
+    fondo=forms.FloatField(required=True, label="Fondo")
+    monto_manejo=forms.FloatField(required=True, label="Monto por manejo de cuenta:")
+    moneda=forms.CharField(max_length=1, label="Tipo de moneda: ")
+    estado=forms.ChoiceField(required=True, label="Estado de la cuenta",choices=opciones)
+    pre_auto=forms.ChoiceField(required=True, label="Pre-autorización de cheques: ",choices=opciones)
+
+    class Meta:
+
+        fields=("id","codigo_usuario","fondo","monto_manejo","moneda","estado","pre_auto")
+
+
 
 
 

@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', views.indexAdmin),
     path('registro/',views.registroCliente),
     path('registroEm/',views.registroClienteE),
+    path('nuevaMonetaria/',views.crearCuentaMonetaria),
 
 ]

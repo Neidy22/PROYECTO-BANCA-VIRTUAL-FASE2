@@ -9,7 +9,6 @@ from django.db import models
 
 
 class Cheque(models.Model):
-    id = models.IntegerField(primary_key=True)
     codigo_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='codigo_usuario')
     codigo_monetaria = models.ForeignKey('Cuentamonetaria', models.DO_NOTHING, db_column='codigo_monetaria')
     codigo_ahorro = models.ForeignKey('Cuentaahorro', models.DO_NOTHING, db_column='codigo_ahorro')
@@ -56,11 +55,13 @@ class Clienteindividual(models.Model):
 
 
 class Cuentaahorro(models.Model):
-    id = models.IntegerField(primary_key=True)
     codigo_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='codigo_usuario')
     fondo = models.FloatField(blank=True, null=True)
     tasa_interes = models.FloatField(blank=True, null=True)
     promocion = models.FloatField(blank=True, null=True)
+    moneda = models.CharField(max_length=1, blank=True, null=True)
+    estado = models.IntegerField(blank=True, null=True)
+    pre_auto = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -69,12 +70,13 @@ class Cuentaahorro(models.Model):
 
 
 class Cuentafija(models.Model):
-    id = models.IntegerField(primary_key=True)
     codigo_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='codigo_usuario')
     cuota = models.FloatField(blank=True, null=True)
     capitalizacion = models.IntegerField(blank=True, null=True)
     tasa_interes = models.FloatField(blank=True, null=True)
     fondo_total = models.FloatField(blank=True, null=True)
+    moneda = models.CharField(max_length=1, blank=True, null=True)
+    estado = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -83,10 +85,12 @@ class Cuentafija(models.Model):
 
 
 class Cuentamonetaria(models.Model):
-    id = models.IntegerField(primary_key=True)
     codigo_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='codigo_usuario')
     fondo = models.FloatField(blank=True, null=True)
     monto_manejo = models.FloatField(blank=True, null=True)
+    moneda = models.CharField(max_length=1, blank=True, null=True)
+    estado = models.IntegerField(blank=True, null=True)
+    pre_auto = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -107,7 +111,6 @@ class Prestamo(models.Model):
 
 
 class Tarjetadebito(models.Model):
-    id = models.IntegerField(primary_key=True)
     codigo_usuario = models.IntegerField()
     fondo = models.FloatField(blank=True, null=True)
 
