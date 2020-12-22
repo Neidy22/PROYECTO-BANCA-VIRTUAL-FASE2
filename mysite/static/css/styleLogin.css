@@ -14,13 +14,13 @@ font-style:oblique;
 }
 
 
-#login{
+.login {
 background-color:#43c2c1;
 border-style:inset;
 margin-top:60px;
 width:25%;
 margin-left:37.5%;
-height:300px;
+height:500px;
 }
 
 #frm label{

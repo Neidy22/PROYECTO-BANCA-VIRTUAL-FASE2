@@ -21,6 +21,7 @@ from . import views
 
 urlpatterns = [
 
-    path('registro/',views.registroCliente)
+    path('registro/',views.registroCliente),
+    path('registroEm/',views.registroClienteE),
 
 ]
