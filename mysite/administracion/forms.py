@@ -53,12 +53,24 @@ class cuentaMonetaria2(forms.Form):
     monto_manejo=forms.FloatField(required=True, label="Monto por manejo de cuenta:")
     moneda=forms.CharField(max_length=1, label="Tipo de moneda: ")
     estado=forms.ChoiceField(required=True, label="Estado de la cuenta",choices=opciones)
-    pre_auto=forms.ChoiceField(required=True, label="Pre-autorización de cheques: ",choices=opciones)
+    pre_auto=forms.ChoiceField(required=True, label="Pre-autorización de cheques:",choices=opciones)
 
     class Meta:
 
         fields=("id","codigo_usuario","fondo","monto_manejo","moneda","estado","pre_auto")
 
+class cuentaAhorro(forms.Form):
+    opciones=(("1","Activada"),("0","Desactivada"))
+    codigo_usuario=forms.IntegerField(required=True,label="Código de usuario:")
+    fondo = forms.FloatField(required=True, label="Fondo:")
+    tasa_interes = forms.FloatField(required=True, label="Tasa de Interés:")
+    promocion=forms.FloatField(required=True, label="Promoción")
+    moneda = forms.CharField(max_length=1, label="Tipo de moneda:")
+    estado = forms.ChoiceField(required=True, label="Estado de la cuenta:", choices=opciones)
+    pre_auto = forms.ChoiceField(required=True, label="Pre-autorización de cheques:", choices=opciones)
+
+    class Meta:
+        fields=("id","codigo_usuario","fondo","tasa_interes","promocion","moneda","estado","pre_auto")
 
 
 

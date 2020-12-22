@@ -162,4 +162,47 @@ def crearCuentaMonetaria(request):
             }
     return render(request, 'registroCuentaMonetaria.html', variables)
 
+def crearCuentaAhorro(request):
+    form=cuentaAhorro()
+    nombre="Creación de nuevas cuentas de ahorro"
+    variables = {
+        "form": form,
+        "mensaje": nombre
+    }
+    if request.method == "POST":
+        form = cuentaAhorro(data=request.POST)
+        if form.is_valid():
+            datos = form.cleaned_data
+            codigo=datos.get("codigo_usuario")
+            fondo=datos.get("fondo")
+            tasa=datos.get("tasa_interes")
+            promo=datos.get("promocion")
+            moneda=datos.get("moneda")
+            estado=datos.get("estado")
+            auto=datos.get("pre_auto")
+            id=0
+
+
+            db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+            c = db.cursor()
+            consulta = "INSERT INTO cuentaAhorro VALUES("+str(id)+"," + str(codigo) + "," + str(fondo) + "," + str(tasa) + ","+str(promo)+",'" + str(moneda) + "'," + str(estado) + "," + str(auto) +  ")"
+            c.execute(consulta)
+            db.commit()
+            c.close()
+            nombre = "Nueva cuenta creada"
+            form = cuentaAhorro()
+            variables = {
+                "form": form,
+                "mensaje": nombre
+            }
+
+        else:
+            nombre = "Ya existe una  con los mismos datos"
+            variables = {
+                "form": form,
+                "mensaje": nombre
+
+            }
+    return render(request, 'registroCuentaAhorro.html', variables)
+
 
