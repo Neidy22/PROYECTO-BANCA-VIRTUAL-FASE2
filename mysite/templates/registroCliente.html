@@ -1,10 +1,10 @@
-{% extends 'baseForms.html' %}
+{% extends 'baseFondo.html' %}
 {% block content %}
     <form method="POST">
         <div class="login" >
             {{form.as_p}}
             {% csrf_token%}
-        <button type="submit">Registrar</button>
+        <button type="submit" id="btn">Registrar</button>
         </div>
 
     </form>

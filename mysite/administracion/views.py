@@ -8,6 +8,10 @@ user='neidy'
 contra='Auntyflores12031206'
 puerto=3306
 # Create your views here.
+def indexAdmin(request):
+    return render(request,'menuAdmin.html');
+
+
 def registroCliente(request):
     form= clienteI()
     nombre="Registro de clientes"
