@@ -205,4 +205,46 @@ def crearCuentaAhorro(request):
             }
     return render(request, 'registroCuentaAhorro.html', variables)
 
+def crearCuentaFija(request):
+    form=cuentaFija()
+    nombre="Creación de cuentas a plazo fijo"
+    variables={
+        "form":form,
+        "mensaje":nombre
+    }
+    if request.method=="POST":
+        form=cuentaFija(data=request.POST)
+        if form.is_valid():
+            datos=form.cleaned_data
+            codigo=datos.get("codigo_usuario")
+            cuota=datos.get("cuota")
+            capi=datos.get("capitalizacion")
+            tasa=datos.get("tasa_interes")
+            fondo=datos.get("fondo_total")
+            moneda=datos.get("moneda")
+            estado=datos.get("estado")
+            id=0
+            db=MySQLdb.connect(host=host,user=user,password=contra,db=db_name,connect_timeout=5)
+            c=db.cursor()
+            consulta="INSERT INTO cuentaFija VALUES ("+str(id)+","+str(codigo)+","+str(cuota)+","+str(capi)+","+str(tasa)+","+str(fondo)+",'"+str(moneda)+"',"+str(estado)+")"
+            c.execute(consulta)
+            db.commit()
+            c.close()
+            nombre="Nueva cuenta creada"
+            form=cuentaFija()
+            variables={
+                "form":form,
+                "mensaje":nombre
+            }
+
+        else:
+            nombre = "Ya existe una  con los mismos datos"
+            variables = {
+                "form": form,
+                "mensaje": nombre
+
+            }
+    return render(request, 'registroCuentaFija.html', variables)
+
+
 

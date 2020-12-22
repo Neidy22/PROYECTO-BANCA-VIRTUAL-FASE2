@@ -72,6 +72,19 @@ class cuentaAhorro(forms.Form):
     class Meta:
         fields=("id","codigo_usuario","fondo","tasa_interes","promocion","moneda","estado","pre_auto")
 
+class cuentaFija(forms.Form):
+    opciones = (("1", "Activada"), ("0", "Desactivada"))
+    opc=(("1","3"),("2","6"),("3","12"),("4","24"),("5","36"))
+    codigo_usuario=forms.IntegerField(required=True,label="Código de usuario:")
+    cuota=forms.FloatField(required=True, label="Cuota:")
+    capitalizacion=forms.ChoiceField(required=True,label="Tiempo en meses:",choices=opc)
+    tasa_interes=forms.FloatField(required=True, label="Tasa de interés:")
+    fondo_total=forms.FloatField(required=True, label="Fondo Total:")
+    moneda=forms.CharField(max_length=1,label="Tipo de moneda:")
+    estado = forms.ChoiceField(required=True, label="Estado de la cuenta:", choices=opciones)
+
+    class Meta:
+        fields=("id","codigo_usuario","cuota","capitalizacion","tasa_interes","fondo_total","moneda","estado")
 
 
 

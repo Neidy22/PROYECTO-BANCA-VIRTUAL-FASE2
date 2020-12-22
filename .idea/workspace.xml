@@ -20,13 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="141f39cf-2e15-45b7-b886-d3d932a1ad01" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mysite/templates/registroCuentaAhorro.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysite/templates/registroCuentaFija.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/administracion/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/administracion/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/administracion/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/administracion/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/administracion/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/administracion/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/db.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/templates/menuAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/templates/menuAdmin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608627779167</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Creación de cuentas de ahorro">
+      <created>1608629498183</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608629498183</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -116,7 +121,8 @@
     <MESSAGE value="Generación de usuarios" />
     <MESSAGE value="Menú administrador" />
     <MESSAGE value="Creación de cuentas monetarias" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creación de cuentas monetarias" />
+    <MESSAGE value="Creación de cuentas de ahorro" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creación de cuentas de ahorro" />
   </component>
   <component name="WindowStateProjectService">
     <state x="524" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608598705282">
@@ -127,10 +133,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="647" y="310" key="Github.ShareDialog/0.0.1536.824@0.0.1536.824" timestamp="1608517396096" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608627786376">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608629500950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608627786376" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608629500950" />
     <state x="231" y="130" width="1139" height="780" maximized="true" key="dock-window-1" timestamp="1608622275466">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -139,9 +145,13 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="26" y="130" width="1139" height="780" maximized="true" key="dock-window-2/0.0.1536.824@0.0.1536.824" timestamp="1608622888835" />
-    <state x="977" y="0" width="566" height="830" key="dock-window-3" timestamp="1608628705376">
+    <state x="-6" y="0" width="781" height="830" key="dock-window-3" timestamp="1608631057784">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="977" y="0" width="566" height="830" key="dock-window-3/0.0.1536.824@0.0.1536.824" timestamp="1608628705376" />
+    <state x="-6" y="0" width="781" height="830" key="dock-window-3/0.0.1536.824@0.0.1536.824" timestamp="1608631057784" />
+    <state x="761" y="-7" width="782" height="838" key="dock-window-4" timestamp="1608631057784">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="761" y="-7" width="782" height="838" key="dock-window-4/0.0.1536.824@0.0.1536.824" timestamp="1608631057784" />
   </component>
 </project>
