@@ -11,7 +11,6 @@ puerto=3306
 def indexAdmin(request):
     return render(request,'menuAdmin.html');
 
-
 def registroCliente(request):
     form= clienteI()
     nombre="Registro de clientes"
@@ -58,7 +57,6 @@ def registroCliente(request):
 
             }
     return render(request,'registroCliente.html',variables)
-
 
 def registroClienteE(request):
     form= clienteE()
@@ -138,11 +136,12 @@ def crearCuentaMonetaria(request):
             estado=datos.get("estado")
             auto=datos.get("pre_auto")
             id=0
+            ch=0
 
 
             db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
             c = db.cursor()
-            consulta = "INSERT INTO cuentaMonetaria VALUES("+str(id)+"," + str(codigo) + "," + str(fondo) + "," + str(manejo) + ",'" + str(moneda) + "'," + str(estado) + "," + str(auto) +  ")"
+            consulta = "INSERT INTO cuentaMonetaria VALUES("+str(id)+"," + str(codigo) + "," + str(fondo) + "," + str(manejo) + ",'" + str(moneda) + "'," + str(estado) + "," + str(auto) + ","+str(ch)+ ")"
             c.execute(consulta)
             db.commit()
             c.close()
@@ -181,11 +180,12 @@ def crearCuentaAhorro(request):
             estado=datos.get("estado")
             auto=datos.get("pre_auto")
             id=0
+            ch=0
 
 
             db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
             c = db.cursor()
-            consulta = "INSERT INTO cuentaAhorro VALUES("+str(id)+"," + str(codigo) + "," + str(fondo) + "," + str(tasa) + ","+str(promo)+",'" + str(moneda) + "'," + str(estado) + "," + str(auto) +  ")"
+            consulta = "INSERT INTO cuentaAhorro VALUES("+str(id)+"," + str(codigo) + "," + str(fondo) + "," + str(tasa) + ","+str(promo)+",'" + str(moneda) + "'," + str(estado) + "," + str(auto) + ","+str(ch)+ ")"
             c.execute(consulta)
             db.commit()
             c.close()
@@ -245,6 +245,203 @@ def crearCuentaFija(request):
 
             }
     return render(request, 'registroCuentaFija.html', variables)
+
+def generarChequera(request):
+    form = chequera()
+    nombre = "Creación de chequeras"
+    variables = {
+        "form": form,
+        "mensaje": nombre
+    }
+    if request.method == "POST":
+        form = chequera(data=request.POST)
+        if form.is_valid():
+            datos = form.cleaned_data
+            codigom=datos.get("codigo_monetaria")
+            codigoa=datos.get("codigo_ahorro")
+            fecha=datos.get("fecha_emision")
+            disponibles=datos.get("cheques_disponibles")
+            id = 0
+
+
+
+
+
+            nombre="Nueva chequera registrada"
+            form=chequera()
+            variables={
+                "form":form,
+                "mensaje":nombre
+            }
+
+
+
+        else:
+            nombre = "Ya existe una chequera con los mismos datos"
+            variables = {
+                "form": form,
+                "mensaje": nombre
+
+            }
+    return render(request, 'generarChequera.html', variables)
+
+def crearChequera(id,codigom,codigoa,fecha,disponibles):
+    db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+    c = db.cursor()
+    consulta = "INSERT INTO chequera VALUES (" + str(id) + "," + str(codigom) + "," + str(codigoa) + ",'" + str(fecha) + "'," + str(disponibles) + ")"
+    c.execute(consulta)
+    db.commit()
+    c.close()
+
+
+
+
+def depositar(request):
+    form = deposito()
+    nombre = "Depositar"
+    variables = {
+        "form": form,
+        "mensaje": nombre
+    }
+    if request.method == "POST":
+        form = deposito(data=request.POST)
+        if form.is_valid():
+            datos = form.cleaned_data
+            paga=datos.get("depositante")
+            recibe=datos.get("receptor")
+            tipo=datos.get("tipo_receptor")
+            monto=datos.get("monto")
+            moneda=datos.get("moneda")
+            id = 0
+            tp=int(tipo)
+
+            total=tasaCambio(monto,moneda,recibe,tipo)
+            if tp == 1:
+                db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+                c = db.cursor()
+                consulta = "UPDATE cuentaMonetaria SET fondo= '" + str(total) + "'  WHERE id=" + str(recibe)
+                c.execute(consulta)
+                db.commit()
+                c.close()
+                print(consulta)
+            elif tp == 2:
+                db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+                c = db.cursor()
+                consulta = "UPDATE cuentaAhorro SET fondo= '" + str(total) + "' WHERE id=" + str(recibe)
+                c.execute(consulta)
+                db.commit()
+                c.close()
+                print(consulta)
+            elif tp == 3:
+                db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+                c = db.cursor()
+                consulta = "UPDATE cuentaFija SET fondo_total= '" + str(total) + "' WHERE id=" + str(recibe)
+                c.execute(consulta)
+                db.commit()
+                c.close()
+                print(consulta)
+
+
+            db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+            c = db.cursor()
+            consulta = "INSERT INTO deposito VALUES (" + str(id) + ",'" + str(paga) + "'," + str(recibe) +","+str(tipo)+"," + str(monto) + ",'" + str(moneda) + "')"
+            c.execute(consulta)
+            db.commit()
+            c.close()
+
+            #actualizarMonto(tipo,recibe,depo)
+
+            nombre = "Depósito realizado con éxito"
+            form = deposito()
+            variables = {
+                "form": form,
+                "mensaje": nombre
+            }
+
+        else:
+            nombre = "Datos no válidos"
+            variables = {
+                "form": form,
+                "mensaje": nombre
+
+            }
+    return render(request, 'deposito.html', variables)
+
+def tasaCambio(monto,moneda,cuenta,tipo):
+    total=0
+    tp=int(tipo)
+    if tp==1:
+        #try:
+        c=Cuentamonetaria.objects.get(id=cuenta)
+        ficha=c.moneda
+        mon=c.fondo
+        cambio=calcularCambio(ficha,moneda,monto)
+        total=cambio+mon
+
+        #except Cuentamonetaria.DoesNotExist:
+         #   return False
+
+
+    elif tp==2:
+        #try:
+        c=Cuentaahorro.objects.get(id=cuenta)
+        ficha = c.moneda
+        mon=c.fondo
+        cambio = calcularCambio(ficha, moneda, monto)
+        total = cambio + mon
+        #except Cuentaahorro.DoesNotExist:
+         #   return False
+
+    elif tp==3:
+        #try:
+        c=Cuentafija.objects.get(id=cuenta)
+        ficha = c.moneda
+        mon=c.fondo_total
+        cambio = calcularCambio(ficha, moneda, monto)
+        total = cambio + mon
+        #except Cuentaahorro.DoesNotExist:
+         #   return False
+    return total
+
+def calcularCambio(ficha,moneda,monto):
+    cambio=0
+    if ficha==moneda:
+        cambio=monto
+    elif ficha == "$" and moneda == "Q":
+        cambio = monto / 7.87
+    elif ficha=="Q" and moneda=="$":
+        cambio=monto*7.60
+    print(cambio)
+    return cambio
+
+def actualizarMonto(tipo,cuenta,total):
+    if tipo==1:
+        db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+        c = db.cursor()
+        consulta = "UPDATE cuentaMonetaria SET fondo= '"+str(total)+"'  WHERE id="+str(cuenta)
+        c.execute(consulta)
+        db.commit()
+        c.close()
+        print(consulta)
+    elif tipo==2:
+        db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+        c = db.cursor()
+        consulta = "UPDATE cuentaAhorro SET fondo= '" + str(total) + "' WHERE id=" + str(cuenta)
+        c.execute(consulta)
+        db.commit()
+        c.close()
+        print(consulta)
+    elif tipo==3:
+        db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+        c = db.cursor()
+        consulta = "UPDATE cuentaFija SET fondo_total= '" + str(total) + "' WHERE id=" + str(cuenta)
+        c.execute(consulta)
+        db.commit()
+        c.close()
+        print(consulta)
+
+
+
 
 
 

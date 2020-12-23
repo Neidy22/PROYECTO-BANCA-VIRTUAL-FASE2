@@ -9,18 +9,29 @@ from django.db import models
 
 
 class Cheque(models.Model):
-    codigo_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='codigo_usuario')
-    codigo_monetaria = models.ForeignKey('Cuentamonetaria', models.DO_NOTHING, db_column='codigo_monetaria')
-    codigo_ahorro = models.ForeignKey('Cuentaahorro', models.DO_NOTHING, db_column='codigo_ahorro')
+    codigo_chequera = models.ForeignKey('Chequera', models.DO_NOTHING, db_column='codigo_chequera')
     fecha_emision = models.DateField(blank=True, null=True)
     nombre_portador = models.CharField(max_length=100, blank=True, null=True)
     monto = models.FloatField(blank=True, null=True)
-    estado = models.IntegerField(blank=True, null=True)
+    autorizado = models.IntegerField(blank=True, null=True)
+    cobrado = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'cheque'
-        unique_together = (('id', 'codigo_usuario', 'codigo_monetaria', 'codigo_ahorro'),)
+        unique_together = (('id', 'codigo_chequera'),)
+
+
+class Chequera(models.Model):
+    codigo_monetaria = models.ForeignKey('Cuentamonetaria', models.DO_NOTHING, db_column='codigo_monetaria')
+    codigo_ahorro = models.ForeignKey('Cuentaahorro', models.DO_NOTHING, db_column='codigo_ahorro')
+    fecha_emision = models.DateField(blank=True, null=True)
+    cheques_disponibles = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'chequera'
+        unique_together = (('id', 'codigo_monetaria', 'codigo_ahorro'),)
 
 
 class Clienteempresarial(models.Model):
@@ -62,6 +73,7 @@ class Cuentaahorro(models.Model):
     moneda = models.CharField(max_length=1, blank=True, null=True)
     estado = models.IntegerField(blank=True, null=True)
     pre_auto = models.IntegerField(blank=True, null=True)
+    cheques_disponibles = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -91,11 +103,24 @@ class Cuentamonetaria(models.Model):
     moneda = models.CharField(max_length=1, blank=True, null=True)
     estado = models.IntegerField(blank=True, null=True)
     pre_auto = models.IntegerField(blank=True, null=True)
+    cheques_disponibles = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'cuentamonetaria'
         unique_together = (('id', 'codigo_usuario'),)
+
+
+class Deposito(models.Model):
+    depositante = models.IntegerField(blank=True, null=True)
+    receptor = models.IntegerField(blank=True, null=True)
+    tipo_receptor = models.IntegerField(blank=True, null=True)
+    monto = models.FloatField(blank=True, null=True)
+    moneda = models.CharField(max_length=1, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'deposito'
 
 
 class Prestamo(models.Model):

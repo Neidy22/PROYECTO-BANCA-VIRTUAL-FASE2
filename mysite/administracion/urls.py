@@ -26,5 +26,7 @@ urlpatterns = [
     path('nuevaMonetaria/',views.crearCuentaMonetaria),
     path('nuevaAhorro/', views.crearCuentaAhorro),
     path('nuevaFija/', views.crearCuentaFija),
+    path('nuevaChequera/',views.generarChequera),
+    path('depositar/', views.depositar),
 
 ]

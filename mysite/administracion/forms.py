@@ -44,7 +44,7 @@ class clienteE2(forms.Form):
 class cuentaMonetaria(forms.ModelForm):
     class Meta:
         model=Cuentamonetaria
-        fields=("id","codigo_usuario","fondo","monto_manejo","moneda","estado","pre_auto")
+        fields=("id","codigo_usuario","fondo","monto_manejo","moneda","estado","pre_auto","cheques_disponibles")
 
 class cuentaMonetaria2(forms.Form):
     opciones=(("1","Activada"),("0","Desactivada"))
@@ -57,7 +57,7 @@ class cuentaMonetaria2(forms.Form):
 
     class Meta:
 
-        fields=("id","codigo_usuario","fondo","monto_manejo","moneda","estado","pre_auto")
+        fields=("id","codigo_usuario","fondo","monto_manejo","moneda","estado","pre_auto","cheques_disponibles")
 
 class cuentaAhorro(forms.Form):
     opciones=(("1","Activada"),("0","Desactivada"))
@@ -69,8 +69,9 @@ class cuentaAhorro(forms.Form):
     estado = forms.ChoiceField(required=True, label="Estado de la cuenta:", choices=opciones)
     pre_auto = forms.ChoiceField(required=True, label="Pre-autorización de cheques:", choices=opciones)
 
+
     class Meta:
-        fields=("id","codigo_usuario","fondo","tasa_interes","promocion","moneda","estado","pre_auto")
+        fields=("id","codigo_usuario","fondo","tasa_interes","promocion","moneda","estado","pre_auto","cheques_disponibles")
 
 class cuentaFija(forms.Form):
     opciones = (("1", "Activada"), ("0", "Desactivada"))
@@ -86,6 +87,41 @@ class cuentaFija(forms.Form):
     class Meta:
         fields=("id","codigo_usuario","cuota","capitalizacion","tasa_interes","fondo_total","moneda","estado")
 
+class chequera(forms.Form):
+
+    codigo_monetaria = forms.IntegerField(required=True, label="Código de cuenta monetaria:")
+    codigo_ahorro = forms.IntegerField(required=True, label="Código de cuenta de ahorra:")
+    fecha_emision=forms.DateField(label="Fecha de emisión:")
+    cheques_disponibles=forms.IntegerField(required=True, label="Cheques disponibles")
+
+    class Meta:
+        fields=("id","codigo_monetaria","codigo_ahorro","fecha_emision","cheques_disponibles")
+
+
+class cheque(forms.Form):
+    opc=(("1","Cobrado"),("0","No cobrado"))
+    opcs=(("1","Autorizado"),("0","No autorizado"))
+    codigo_chequera=forms.IntegerField(required=True, label="Código de chequera:")
+    fecha_emision=forms.DateField(label="Fecha de emisión:")
+    nombre_portador=forms.CharField(max_length=50, label="Nombre del portador:")
+    monto=forms.FloatField(label="Monto:")
+    autorizado=forms.ChoiceField(label="¿Cheque autorizado?",choices=opc)
+    cobrado=forms.ChoiceField(label="Estado del cheque:",choices=opc)
+
+    class Meta:
+        fields=("id","codigo_chequera","fecha_emision","nombre_portador","monto","estado")
+
+class deposito(forms.Form):
+    opc=(("Q","Quetzales"),("$","Dólares"))
+    opcs=(("1","Monetaria"),("2","Ahorro"),("3","Plazo fijo"))
+    depositante=forms.CharField(required=True, label="Depositante:")
+    receptor=forms.IntegerField(required=True,label="Número de cuenta destino:")
+    tipo_receptor=forms.ChoiceField(required=True,label="Tipo de cuenta:",choices=opcs)
+    monto=forms.FloatField(required=True, label="Monto a depositar:")
+    moneda=forms.ChoiceField(required=True,label="Moneda:", choices=opc)
+
+    class Meta:
+        fields=("id","depostitante","receptor","tipo_receptor","monto","moneda")
 
 
 
