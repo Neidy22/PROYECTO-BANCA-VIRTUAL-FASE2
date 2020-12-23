@@ -263,17 +263,49 @@ def generarChequera(request):
             disponibles=datos.get("cheques_disponibles")
             id = 0
 
+            if codigom!=1 and codigoa==1:
+                cu=Cuentamonetaria.objects.get(id=codigom)
+                dis=cu.cheques_disponibles
+                var=int(dis)
+                if var==0:
+                    crearChequera(id,codigom,codigoa,fecha,disponibles)
+                    form=chequera()
+                    nombre="Se generó una nueva chequera"
+                    actualizarChequesMone(disponibles,codigom)
+
+                    variables={
+                        "form":form,
+                        "mensaje":nombre
+                    }
+                else:
+                    nombre = "Todavía hay cheques disponibles en la chequera anterior"
+                    variables = {
+                        "form": form,
+                        "mensaje": nombre
+                    }
+            elif codigoa!=1 and codigom==1:
+                cu = Cuentaahorro.objects.get(id=codigoa)
+                dis = cu.cheques_disponibles
+                var=int(dis)
+                if var == 0:
+                    crearChequera(id, codigom, codigoa, fecha, disponibles)
+                    form = chequera()
+                    nombre = "Se generó una nueva chequera"
+                    actualizarChequesAho(disponibles,codigoa)
 
 
 
 
-            nombre="Nueva chequera registrada"
-            form=chequera()
-            variables={
-                "form":form,
-                "mensaje":nombre
-            }
-
+                    variables = {
+                        "form": form,
+                        "mensaje": nombre
+                    }
+                else:
+                    nombre = "Todavía hay cheques disponibles en la chequera anterior"
+                    variables = {
+                        "form": form,
+                        "mensaje": nombre
+                    }
 
 
         else:
@@ -293,8 +325,25 @@ def crearChequera(id,codigom,codigoa,fecha,disponibles):
     db.commit()
     c.close()
 
+    crearCheques(id,disponibles)
 
+def crearCheques(chequera,disponibles):
+    id=0
+    fecha=0,
+    nombre="vacio"
+    monto=0
+    cobrado=0
+    autorizado=0
+    n=0
 
+    while n<disponibles:
+        db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+        c = db.cursor()
+        consulta = "INSERT INTO cheque VALUES("+str(id)+","+str(chequera)+",'"+str(fecha)+"','"+str(nombre)+"',"+str(monto)+","+str(autorizado)+","+str(cobrado)+ ")"
+        c.execute(consulta)
+        db.commit()
+        c.close()
+        n+=1;
 
 def depositar(request):
     form = deposito()
@@ -439,6 +488,24 @@ def actualizarMonto(tipo,cuenta,total):
         db.commit()
         c.close()
         print(consulta)
+
+def actualizarChequesMone(total,id):
+    db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+    c = db.cursor()
+    consulta = "UPDATE cuentaMonetaria SET cheques_disponibles= '" + str(total) + "'  WHERE id=" + str(id)
+    c.execute(consulta)
+    db.commit()
+    c.close()
+
+def actualizarChequesAho(total,id):
+    db = MySQLdb.connect(host=host, user=user, password=contra, db=db_name, connect_timeout=5)
+    c = db.cursor()
+    consulta = "UPDATE cuentaAhorro SET cheques_disponibles= '" + str(total) + "'  WHERE id=" + str(id)
+    c.execute(consulta)
+    db.commit()
+    c.close()
+
+
 
 
 

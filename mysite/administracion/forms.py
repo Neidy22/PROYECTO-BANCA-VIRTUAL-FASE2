@@ -92,7 +92,7 @@ class chequera(forms.Form):
     codigo_monetaria = forms.IntegerField(required=True, label="Código de cuenta monetaria:")
     codigo_ahorro = forms.IntegerField(required=True, label="Código de cuenta de ahorra:")
     fecha_emision=forms.DateField(label="Fecha de emisión:")
-    cheques_disponibles=forms.IntegerField(required=True, label="Cheques disponibles")
+    cheques_disponibles=forms.IntegerField(min_value=10,required=True, label="Cheques disponibles")
 
     class Meta:
         fields=("id","codigo_monetaria","codigo_ahorro","fecha_emision","cheques_disponibles")
