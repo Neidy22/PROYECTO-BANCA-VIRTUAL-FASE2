@@ -52,3 +52,16 @@ font-size:10px;
 font-family:Verdana,Helvetica;
 font-weight:bold;
 }
+
+
+.cajon{
+background-color:#2AB39730;
+width:50%;
+margin-left:25%;
+margin-top:10px;
+color:white;
+font-size:larger;
+font:600;
+font-style:italic;
+
+}
